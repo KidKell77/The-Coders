@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Farm Smartly</title>
+  <link rel="stylesheet" href="cropAdvisor.css" />
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      🌾 Farm Smarty
+    </header>
+
+    <!-- Optional Intro Section (styled by your .tab-content class) -->
+    <section class="tab-content active">
+      <h2 style="margin-top: 0;">Welcome to Farm Smartly, where we believe in helping you don't work hard, but work smartly, or do both!!</h2>
+      <p>Farm Smarty AI can make mistakes, so double-check it !</p>
+    </section>
+
+    <!-- AI Crop Advisor Section -->
+    <section id="cropAdvisor" class="tab-content active">
+      <h2>🧠 Farm Smarty AI: Cultivating Your Success</h2>
+      <input id="chatInput" placeholder="Tell me about your crops..." />
+      <button onclick="handleChat()">Tell me</button>
+      <div id="chatResponse" class="output"></div>
+    </section>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="cropAdvisor.js"></script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Farm Smartly</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      scroll-behavior: smooth;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #00aeff, #00d9ff);
+      color: rgb(0, 0, 0);
+    }
+    .bg-video {
+      position: fixed; top: 0; left: 0;
+      min-width: 100%; min-height: 100%;
+      z-index: -1; object-fit: cover;
+      filter: brightness(60%);
+    }
+    .page {
+      display: none;
+      padding: 2rem;
+      max-width: 900px;
+      margin: 3rem auto;
+      background-color: rgba(72, 255, 0, 0.75);
+      border-radius: 10px;
+    }
+    .page.active { display: block; }
+    button, select {
+      cursor: pointer;
+    }
+    select {
+      width: 100%; max-width: 320px;
+      padding: 0.5rem; color: #000;
+      border-radius: 0.375rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  
+
+  <!-- 🧭 Welcome Page / Mode Selector -->
+  <section id="welcome" class="page active text-center">
+    <h1 class="text-4xl font-bold mb-2">🌾 Farm Smartly</h1>
+    <p class="italic text-lg mb-4">"Don't work hard, but work smartly — or do both!"</p>
+    <p class="font-semibold mb-6">Created by: The Coders</p>
+    <p class="font-semibold mb-9">Choose Mode</p>
+    <div>
+      <button onclick="chooseAI('online')" class="bg-gray-700 px-6 py-2 rounded hover:bg-gray-600 mr-2">🌐 Online Mode</button>
+      <button onclick="chooseAI('offline')" class="bg-gray-700 px-6 py-2 rounded hover:bg-gray-600">📘 Offline Mode</button>
+    </div>
+  </section>
+
+  <!-- 🗂 Main Menu -->
+  <section id="menu" class="page text-center">
+    <h2 class="text-3xl font-bold mb-6">Main Menu</h2>
+    <div class="space-y-4 max-w-sm mx-auto">
+      <button onclick="showPage('pests')" class="bg-green-700 px-6 py-2 rounded w-full">🐛 Pests & Diseases</button>
+      <button onclick="showPage('recommender')" class="bg-blue-700 px-6 py-2 rounded w-full">📍 Fertilizer & Crop Recommender</button>
+      <button onclick="showPage('planting')" class="bg-yellow-600 px-6 py-2 rounded w-full">🌱 Planting Guide</button>
+      <button id="aiButton" onclick="showPage('aiSection')" class="bg-gray-700 px-6 py-2 rounded w-full">🤖 AI Assistant</button>
+    </div>
+  </section>
+
+  <!-- 🐛 Pests & Diseases -->
+  <section id="pests" class="page">
+    <h2 class="text-3xl font-bold mb-4">🐛 Pests & Diseases</h2>
+    <ul class="list-disc ml-6">
+      <li>Use disease-resistant seeds</li>
+      <li>Apply organic or safe chemical pesticides</li>
+      <li>Practice crop rotation and intercropping</li>
+      <li>Inspect crops weekly for early detection</li>
+    </ul>
+    <button onclick="showPage('menu')" class="mt-6 bg-red-700 px-4 py-2 rounded">← Back to Menu</button>
+  </section>
+
+  <!-- 📍 Recommender -->
+  <section id="recommender" class="page text-left max-w-xl mx-auto">
+    <h2 class="text-3xl font-bold mb-4">📍 Fertilizer & Crop Recommender</h2>
+    <!-- Season section -->
+    <div class="mb-8">
+      <h3 class="text-2xl font-semibold mb-2">Season-based Advice</h3>
+      <select id="seasonSelect" onchange="updateSeasonRecommendations()">
+        <option value="">-- Select Season --</option>
+        <option value="spring">Spring</option>
+        <option value="summer">Summer</option>
+        <option value="autumn">Autumn</option>
+        <option value="winter">Winter</option>
+      </select>
+      <div id="seasonOutput" class="bg-white text-black p-4 rounded"></div>
+    </div>
+    <!-- Province section -->
+    <div>
+      <h3 class="text-2xl font-semibold mb-2">Province-based Advice (SA)</h3>
+      <select id="provinceSelect" onchange="updateProvinceRecommendations()">
+        <option value="">-- Select Province --</option>
+        <option value="gauteng">Gauteng</option>
+        <option value="kwazuluNatal">KwaZulu‑Natal</option>
+        <option value="westernCape">Western Cape</option>
+        <option value="easternCape">Eastern Cape</option>
+        <option value="limpopo">Limpopo</option>
+        <option value="mpumalanga">Mpumalanga</option>
+        <option value="northWest">North West</option>
+        <option value="freeState">Free State</option>
+        <option value="northernCape">Northern Cape</option>
+      </select>
+      <div id="provinceOutput" class="bg-white text-black p-4 rounded"></div>
+    </div>
+    <button onclick="showPage('menu')" class="mt-6 bg-red-700 px-4 py-2 rounded w-full">← Back to Menu</button>
+  </section>
+
+  <!-- 🌱 Planting Guide -->
+  <section id="planting" class="page max-w-xl mx-auto">
+    <h2 class="text-3xl font-bold mb-4">🌱 Planting Guide</h2>
+    <div class="space-y-3 bg-black bg-opacity-70 p-4 rounded max-h-96 overflow-y-auto">
+      <div><strong>🌽 Maize:</strong> Rows 20–30 cm apart, well‑drained, water every 2–3 days, harvest 90–120 days.</div>
+      <div><strong>🥬 Spinach:</strong> Cool weather, harvest 30–40 days, water regularly.</div>
+      <div><strong>🥕 Carrot:</strong> Sandy soil, keep moist, harvest 70–80 days.</div>
+      <div><strong>🍅 Tomato:</strong> Full sun, stake plants, water deeply every 2 days.</div>
+      <div><strong>🥬 Cabbage:</strong> Full sun, fertile soil, harvest 60–90 days.</div>
+      <div><strong>🫑 Green Pepper:</strong> Warm soil, start indoors, transplant after 6 weeks.</div>
+      <div><strong>🍠 Sweet Potato:</strong> Loose warm soil, harvest 90–120 days.</div>
+      <div><strong>🧅 Onion:</strong> Seed or sets, full sun, harvest 90–110 days.</div>
+    </div>
+    <button onclick="showPage('menu')" class="mt-6 bg-red-700 px-4 py-2 rounded w-full">← Back to Menu</button>
+  </section>
+
+  <!-- 🤖 AI Assistant -->
+  <section id="aiSection" class="page max-w-xl mx-auto">
+    <!-- Online -->
+    <div id="onlineAI" class="hidden">
+      <h2 class="text-3xl font-bold mb-4">🤖 Online AI Assistant</h2>
+      <iframe src="cropAdvisor.html" width="100%" height="500" frameborder="0"></iframe>
+    </div>
+    <!-- Offline -->
+    <div id="offlineAI" class="hidden">
+      <h2 class="text-3xl font-bold mb-4">📘 Offline Farming Tips</h2>
+      <div class="flex flex-wrap gap-3 mb-4 justify-center">
+        <button onclick="showTip('maize')" class="bg-green-700 px-4 py-2 rounded">🌽 Maize</button>
+        <button onclick="showTip('spinach')" class="bg-green-600 px-4 py-2 rounded">🥬 Spinach</button>
+        <button onclick="showTip('carrot')" class="bg-orange-500 px-4 py-2 rounded">🥕 Carrot</button>
+        <button onclick="showTip('tomato')" class="bg-red-600 px-4 py-2 rounded">🍅 Tomato</button>
+        <button onclick="showTip('cabbage')" class="bg-lime-600 px-4 py-2 rounded">🥬 Cabbage</button>
+        <button onclick="showTip('pepper')" class="bg-green-500 px-4 py-2 rounded">🫑 Green Pepper</button>
+        <button onclick="showTip('sweet')" class="bg-yellow-600 px-4 py-2 rounded">🍠 Sweet Potato</button>
+        <button onclick="showTip('onion')" class="bg-purple-600 px-4 py-2 rounded">🧅 Onion</button>
+      </div>
+      <div id="tipResult" class="bg-white text-black p-4 rounded shadow"></div>
+    </div>
+    <button onclick="showPage('menu')" class="mt-6 bg-red-700 px-4 py-2 rounded w-full">← Back to Menu</button>
+  </section>
+
+  <!-- Footer -->
+  <footer class="fixed bottom-0 w-full bg-black bg-opacity-90 text-center py-3 text-sm">
+    © 2025 Farm Smartly | Empowering Smart Farmers
+  </footer>
+
+<script>
+  const seasonData = {
+    spring: { fertilizers:['Nitrogen','Phosphorus'], crops:['Maize','Spinach','Tomato'] },
+    summer: { fertilizers:['Potassium','Organic Compost'], crops:['Sugarcane','Banana','Maize'] },
+    autumn: { fertilizers:['Phosphorus','Organic Matter'], crops:['Wheat','Cabbage','Vegetables'] },
+    winter: { fertilizers:['Lime','Compost'], crops:['Wheat','Spinach','Carrot'] }
+  };
+
+  const provinceData = {
+    gauteng:    { fertilizers:['Nitrogen','Phosphorus'], crops:['Maize','Spinach','Tomato'] },
+    kwazuluNatal:{ fertilizers:['Potassium','Compost'], crops:['Sugarcane','Banana','Maize'] },
+    westernCape:{ fertilizers:['Lime','Phosphorus'], crops:['Grapes','Wheat','Veg'] },
+    easternCape:{ fertilizers:['Compost','Nitrogen'], crops:['Maize','Wheat'] },
+    limpopo:    { fertilizers:['Potassium','Nitrogen'], crops:['Tomato','Maize','Groundnuts'] },
+    mpumalanga: { fertilizers:['Phosphorus','Compost'], crops:['Maize','Sugarcane'] },
+    northWest:  { fertilizers:['Nitrogen','Potassium'], crops:['Sunflower','Maize'] },
+    freeState:  { fertilizers:['Phosphorus','Organic'], crops:['Maize','Wheat'] },
+    northernCape:{ fertilizers:['Compost'], crops:['Sunflower','Lucerne'] }
+  };
+
+  const cropTips = {
+    maize:"🌽 Maize: Plant 20–30cm apart, water 2–3d, harvest 90–120d.",
+    spinach:"🥬 Spinach: Cool weather, harvest 30–40d.",
+    carrot:"🥕 Carrot: Sandy soil, harvest 70–80d.",
+    tomato:"🍅 Tomato: Full sun, stake, water every 2d.",
+    cabbage:"🥬 Cabbage: Full sun, harvest 60–90d.",
+    pepper:"🫑 Pepper: Warm soil, transplant after 6w.",
+    sweet:"🍠 Sweet Potato: Loose soil, harvest 90–120d.",
+    onion:"🧅 Onion: Full sun, harvest 90–110d."
+  };
+
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  function chooseAI(mode) {
+    showPage('menu');
+    document.getElementById('onlineAI').classList.toggle('hidden', mode!=='online');
+    document.getElementById('offlineAI').classList.toggle('hidden', mode!=='offline');
+    document.getElementById('aiButton').textContent = mode==='online' ? '🤖 Online AI Assistant' : '📘 Offline AI Tips';
+  }
+
+  function updateSeasonRecommendations() {
+    const sel = document.getElementById('seasonSelect').value;
+    const out = document.getElementById('seasonOutput');
+    out.innerHTML = sel && seasonData[sel]
+      ? `<strong>Fertilizers:</strong> ${seasonData[sel].fertilizers.join(', ')}<br><strong>Crops:</strong> ${seasonData[sel].crops.join(', ')}`
+      : '<span class="text-red-600">Select a season</span>';
+  }
+
+  function updateProvinceRecommendations() {
+    const sel = document.getElementById('provinceSelect').value;
+    const out = document.getElementById('provinceOutput');
+    out.innerHTML = sel && provinceData[sel]
+      ? `<strong>Fertilizers:</strong> ${provinceData[sel].fertilizers.join(', ')}<br><strong>Crops:</strong> ${provinceData[sel].crops.join(', ')}`
+      : '<span class="text-red-600">Select a province</span>';
+  }
+
+  function showTip(crop) {
+    document.getElementById('tipResult').textContent = cropTips[crop] || 'No tip available.';
+  }
+</script>
+
+</body>
+</html>
